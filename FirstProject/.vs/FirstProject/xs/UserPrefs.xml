@@ -1,3 +1,33 @@
 ﻿<Properties StartupConfiguration="{69B574FA-FD24-4703-B906-C6AA0AA0DCA1}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DAL/MySqlContext.cs">
+    <Files>
+      <File FileName="Controllers/StudentController.cs" Line="32" Column="10" />
+      <File FileName="Models/Student.cs" Line="13" Column="1" />
+      <File FileName="DAL/MySqlContext.cs" Line="16" Column="43" />
+      <File FileName="Startup.cs" Line="29" Column="85" />
+      <File FileName="appsettings.json" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="FirstProject" expanded="True">
+            <Node name="FirstProject" expanded="True">
+              <Node name="Dependencies" expanded="True" />
+              <Node name="DAL" expanded="True">
+                <Node name="MySqlContext.cs" selected="True" />
+              </Node>
+              <Node name="Models" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.FirstProject PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
