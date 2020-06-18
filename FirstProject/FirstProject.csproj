@@ -7,8 +7,13 @@
   <ItemGroup>
     <Folder Include="Views\Mir\" />
     <Folder Include="Views\Student\" />
+    <Folder Include="DAL\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Mir\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.20" />
   </ItemGroup>
 </Project>
