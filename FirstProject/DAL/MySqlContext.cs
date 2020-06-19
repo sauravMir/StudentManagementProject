@@ -5,7 +5,7 @@ using FirstProject.Models;
 
 namespace FirstProject.DAL
 {
-    public class MySqlContext : IdentityDbContext<Student>
+    public class MySqlContext : IdentityDbContext<ApplicationUser>
     {
         public MySqlContext(DbContextOptions<MySqlContext> options) : base(options)
         {
@@ -15,5 +15,8 @@ namespace FirstProject.DAL
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Student> student { get; set; }
+
     }
 }

@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using FirstProject.DAL;
+using FirstProject.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace FirstProject
 {
@@ -27,6 +29,8 @@ namespace FirstProject
         {
             services.AddDbContext<MySqlContext>(options =>
             options.UseMySQL(Configuration.GetConnectionString("mysqlConnection")));
+            services.AddIdentity<ApplicationUser,
+                IdentityRole>().AddEntityFrameworkStores<MySqlContext>();
             services.AddControllersWithViews();
         }
 
@@ -45,6 +49,8 @@ namespace FirstProject
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FirstProject.DAL;
 using FirstProject.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,27 +11,23 @@ namespace FirstProject.Controllers
     public class StudentController : Controller
 
     {
-        IList<Student> studentList = new List<Student>{
-                            new Student() { StudentId = 1, StudentName = "John", Age = 18 } ,
-                            new Student() { StudentId = 2, StudentName = "Steve",  Age = 21 } ,
-                            new Student() { StudentId = 3, StudentName = "Bill",  Age = 25 } ,
-                            new Student() { StudentId = 4, StudentName = "Ram" , Age = 20 } ,
-                            new Student() { StudentId = 5, StudentName = "Ron" , Age = 31 } ,
-                            new Student() { StudentId = 4, StudentName = "Chris" , Age = 17 } ,
-                            new Student() { StudentId = 4, StudentName = "Rob" , Age = 19 }
-                        };
+        private MySqlContext mySqlContext;
+
+        public StudentController(MySqlContext mySqlContext)
+        {
+            this.mySqlContext = mySqlContext;
+        }
+
         // GET: /<controller>/
         public ActionResult Index()
         {
-            
-            // Get the students from the database in the real application
-
-            return View(studentList);
+            List<Student> s = mySqlContext.student.ToList<Student>();
+            return View(s);
         }
 
         public ActionResult Edit(int Id)
         {
-            var std = studentList.Where(s => s.StudentId == Id).FirstOrDefault();
+            Student std = mySqlContext.student.FindAsync(Id).Result;
 
             return View(std);
         }
@@ -38,6 +35,8 @@ namespace FirstProject.Controllers
         [HttpPost]
         public ActionResult Edit(Student student)
         {
+            mySqlContext.student.Update(student);
+            mySqlContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
     }
