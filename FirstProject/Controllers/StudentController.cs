@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using FirstProject.DAL;
 using FirstProject.Models;
@@ -29,12 +30,12 @@ namespace FirstProject.Controllers
         {
             Student std = mySqlContext.Student.FindAsync(Id).Result;
 
-            var anonymousObjResult = mySqlContext.Student
-                            .Where(st => st.StudentId == 1)
-                            .Select(st => new {
-                                Id = st.StudentId,
-                                Name = st.StudentName
-                            });
+            //var anonymousObjResult = mySqlContext.Student
+            //                .Where(st => st.StudentId == 1)
+            //                .Select(st => new {
+            //                    Id = st.StudentId,
+            //                    Name = st.StudentName
+            //                });
 
             return View(std);
         }
@@ -50,7 +51,18 @@ namespace FirstProject.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            Student student = new Student();
+            List<Grade> grade = mySqlContext.Grade.ToList();
+            dynamic dynamicModel = new ExpandoObject();
+            dynamicModel.Student = student;
+            dynamicModel.Grades = grade;
+
+            return View(dynamicModel);
+        }
+        [HttpPost]
+        public ActionResult Create(Student student)
+        {
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,11 +1,68 @@
-﻿@{
+﻿@model dynamic
+@{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Student studentModel = Model.Student;
+    List<Grade> gradeModel = Model.Grades;
+
+    List<SelectListItem> gradeSelectorList = new List<SelectListItem>();
+    gradeModel.ForEach(grade =>
+    {
+        gradeSelectorList.Add(new SelectListItem
+        {
+            Text = grade.GradeName,
+            Value = grade.GradeId.ToString(),
+        }) ;
+    });
+
 }
 
-<h2>Create User</h2>
+<h2>Create User @ViewBag.Message</h2>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Student</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(student => studentModel.StudentId)
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(student => studentModel.StudentName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(student => studentModel.StudentName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(student => studentModel.StudentName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(student => studentModel.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(student => studentModel.Age, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(student => studentModel.Age, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.DropDownListFor(student => studentModel.GradeId,
+                                     gradeSelectorList,
+                                     "Select Grade",
+                                     new { @class = "form-control" })
+    </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 
