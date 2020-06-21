@@ -16,7 +16,8 @@ namespace FirstProject.DAL
             base.OnModelCreating(builder);
         }
 
-        public DbSet<Student> student { get; set; }
+        public DbSet<Student> Student { get; set; }
+        public DbSet<Grade> Grade { get; set; }
 
     }
 }

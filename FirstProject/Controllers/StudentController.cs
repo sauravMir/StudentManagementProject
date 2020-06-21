@@ -21,13 +21,20 @@ namespace FirstProject.Controllers
         // GET: /<controller>/
         public ActionResult Index()
         {
-            List<Student> s = mySqlContext.student.ToList<Student>();
+            List<Student> s = mySqlContext.Student.ToList<Student>();
             return View(s);
         }
 
         public ActionResult Edit(int Id)
         {
-            Student std = mySqlContext.student.FindAsync(Id).Result;
+            Student std = mySqlContext.Student.FindAsync(Id).Result;
+
+            var anonymousObjResult = mySqlContext.Student
+                            .Where(st => st.StudentId == 1)
+                            .Select(st => new {
+                                Id = st.StudentId,
+                                Name = st.StudentName
+                            });
 
             return View(std);
         }
@@ -35,9 +42,15 @@ namespace FirstProject.Controllers
         [HttpPost]
         public ActionResult Edit(Student student)
         {
-            mySqlContext.student.Update(student);
+            mySqlContext.Student.Update(student);
             mySqlContext.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Create()
+        {
+            return View();
         }
     }
 }

@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Mir\" />
     <Folder Include="Views\Student\" />
     <Folder Include="DAL\" />
+    <Folder Include="Views\Create\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Mir\Index.cshtml" />
