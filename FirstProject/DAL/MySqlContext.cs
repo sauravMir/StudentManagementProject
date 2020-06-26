@@ -18,6 +18,7 @@ namespace FirstProject.DAL
 
         public DbSet<Student> Student { get; set; }
         public DbSet<Grade> Grade { get; set; }
+        public DbSet<StudentDetails> StudentDetails { get; set; }
 
     }
 }
