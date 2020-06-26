@@ -1,9 +1,8 @@
-﻿@model dynamic
+﻿@model StudentCreateVM
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    Student studentModel = Model.Student;
     List<Grade> gradeModel = Model.Grades;
 
     List<SelectListItem> gradeSelectorList = new List<SelectListItem>();
@@ -18,7 +17,7 @@
 
 }
 
-<h2>Create User @ViewBag.Message</h2>
+<h2>Create Student</h2>
 
 
 @using (Html.BeginForm())
@@ -29,37 +28,67 @@
     <h4>Student</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(student => studentModel.StudentId)
+    @Html.HiddenFor(student => student.Student.StudentId)
 
 
 
     <div class="form-group">
-        @Html.LabelFor(student => studentModel.StudentName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Student.StudentName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(student => studentModel.StudentName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(student => studentModel.StudentName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Student.StudentName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Student.StudentName, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(student => studentModel.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Student.Age, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(student => studentModel.Age, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(student => studentModel.Age, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Student.Age, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Student.Age, "", new { @class = "text-danger" })
         </div>
     </div>
+
     <div class="form-group">
-        @Html.DropDownListFor(student => studentModel.GradeId,
-                                     gradeSelectorList,
-                                     "Select Grade",
-                                     new { @class = "form-control" })
-    </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        @Html.LabelFor(model => model.StudentDetails.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.StudentDetails.Address, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.StudentDetails.Address, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StudentDetails.BloodGroup, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.StudentDetails.BloodGroup, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.StudentDetails.BloodGroup, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StudentDetails.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.StudentDetails.Sex, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.StudentDetails.Sex, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Student.GradeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Student.GradeId,
+                                                                gradeSelectorList,
+                                                                "Select Grade",
+                                                                new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
     }
 
     <div>

@@ -22,12 +22,14 @@ namespace FirstProject.Controllers
         // GET: /<controller>/
         public ActionResult Index()
         {
-            List<Student> s = mySqlContext.Student.ToList<Student>();
+            List<Student> s = mySqlContext.Student.ToList();
+            Grade g = s[7].Grade;
             return View(s);
         }
 
         public ActionResult Edit(int Id)
         {
+         
             Student std = mySqlContext.Student.FindAsync(Id).Result;
 
             //var anonymousObjResult = mySqlContext.Student
@@ -52,16 +54,21 @@ namespace FirstProject.Controllers
         public ActionResult Create()
         {
             Student student = new Student();
+            StudentDetails studentDetails = new StudentDetails();
             List<Grade> grade = mySqlContext.Grade.ToList();
-            dynamic dynamicModel = new ExpandoObject();
+            StudentCreateVM dynamicModel = new StudentCreateVM();
             dynamicModel.Student = student;
             dynamicModel.Grades = grade;
+            dynamicModel.StudentDetails = studentDetails;
 
             return View(dynamicModel);
         }
         [HttpPost]
-        public ActionResult Create(Student student)
+        public ActionResult Create(Student student, StudentDetails studentDetails)
         {
+            mySqlContext.Student.Add(student);
+            mySqlContext.Add(studentDetails);
+            mySqlContext.SaveChanges();
             return RedirectToAction("Index");
         }
     }
