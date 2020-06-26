@@ -10,9 +10,9 @@ namespace FirstProject.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StudentDetailsId { get; set; }
 
-        public String Address { get; set; }
-        public String BloodGroup { get; set; }
-        public String Sex { get; set; }
+        public string Address { get; set; }
+        public string BloodGroup { get; set; }
+        public string Sex { get; set; }
 
     }
 }

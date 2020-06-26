@@ -7,6 +7,7 @@ namespace FirstProject.Models
 {
     public class Student
     {
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StudentId { get; set; }
         [Display(Name = "Student Name")]
@@ -14,6 +15,6 @@ namespace FirstProject.Models
         public int Age { get; set; }
 
         public int GradeId { get; set; }
-        //public Grade Grade { get; set; }
+        public virtual Grade Grade { get; set; }
     }
 }
