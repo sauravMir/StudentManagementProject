@@ -3,14 +3,16 @@ using System;
 using FirstProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FirstProject.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    partial class MySqlContextModelSnapshot : ModelSnapshot
+    [Migration("20200626115556_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,10 +35,10 @@ namespace FirstProject.Migrations
                         .HasColumnType("varchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<short>("EmailConfirmed")
+                    b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<short>("LockoutEnabled")
+                    b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
@@ -56,13 +58,13 @@ namespace FirstProject.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<short>("PhoneNumberConfirmed")
+                    b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<short>("TwoFactorEnabled")
+                    b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
@@ -107,7 +109,7 @@ namespace FirstProject.Migrations
                     b.Property<int>("GradeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentDetailsId")
+                    b.Property<int?>("GradeId1")
                         .HasColumnType("int");
 
                     b.Property<string>("StudentName")
@@ -115,10 +117,10 @@ namespace FirstProject.Migrations
 
                     b.HasKey("StudentId");
 
-                    b.HasIndex("GradeId");
-
-                    b.HasIndex("StudentDetailsId")
+                    b.HasIndex("GradeId")
                         .IsUnique();
+
+                    b.HasIndex("GradeId1");
 
                     b.ToTable("Student");
                 });
@@ -213,10 +215,10 @@ namespace FirstProject.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<short>("EmailConfirmed")
+                    b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<short>("LockoutEnabled")
+                    b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
@@ -236,13 +238,13 @@ namespace FirstProject.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<short>("PhoneNumberConfirmed")
+                    b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<short>("TwoFactorEnabled")
+                    b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
@@ -345,16 +347,14 @@ namespace FirstProject.Migrations
             modelBuilder.Entity("FirstProject.Models.Student", b =>
                 {
                     b.HasOne("FirstProject.Models.Grade", "Grade")
-                        .WithMany("Students")
-                        .HasForeignKey("GradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne()
+                        .HasForeignKey("FirstProject.Models.Student", "GradeId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FirstProject.Models.StudentDetails", "StudentDetails")
-                        .WithOne("Student")
-                        .HasForeignKey("FirstProject.Models.Student", "StudentDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("FirstProject.Models.Grade", null)
+                        .WithMany("Students")
+                        .HasForeignKey("GradeId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FirstProject.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    [Migration("20200626030952_m")]
-    partial class m
+    [Migration("20200626123202_second")]
+    partial class second
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,6 +83,20 @@ namespace FirstProject.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("FirstProject.Models.Grade", b =>
+                {
+                    b.Property<int>("GradeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("GradeName")
+                        .HasColumnType("text");
+
+                    b.HasKey("GradeId");
+
+                    b.ToTable("Grade");
+                });
+
             modelBuilder.Entity("FirstProject.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
@@ -100,7 +114,32 @@ namespace FirstProject.Migrations
 
                     b.HasKey("StudentId");
 
+                    b.HasIndex("GradeId");
+
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("FirstProject.Models.StudentDetails", b =>
+                {
+                    b.Property<int>("StudentDetailsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("BloodGroup")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FatherName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sex")
+                        .HasColumnType("text");
+
+                    b.HasKey("StudentDetailsId");
+
+                    b.ToTable("StudentDetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -297,6 +336,15 @@ namespace FirstProject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FirstProject.Models.Student", b =>
+                {
+                    b.HasOne("FirstProject.Models.Grade", "Grade")
+                        .WithMany("Students")
+                        .HasForeignKey("GradeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

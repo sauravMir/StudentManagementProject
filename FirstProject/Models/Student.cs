@@ -16,5 +16,8 @@ namespace FirstProject.Models
 
         public int GradeId { get; set; }
         public virtual Grade Grade { get; set; }
+
+        public int? StudentDetailsId { get; set; }
+        public virtual StudentDetails StudentDetails { get; set; }
     }
 }

@@ -14,5 +14,9 @@ namespace FirstProject.Models
         public string BloodGroup { get; set; }
         public string Sex { get; set; }
 
+        public string FatherName { get; set; }
+
+        public virtual Student Student { get; set; }
+
     }
 }

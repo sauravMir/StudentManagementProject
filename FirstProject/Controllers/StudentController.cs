@@ -5,7 +5,7 @@ using System.Linq;
 using FirstProject.DAL;
 using FirstProject.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace FirstProject.Controllers
 {
@@ -23,15 +23,20 @@ namespace FirstProject.Controllers
         public ActionResult Index()
         {
             List<Student> s = mySqlContext.Student.ToList();
-            Grade g = s[7].Grade;
+            Grade g = s[4].Grade;
             return View(s);
         }
 
         public ActionResult Edit(int Id)
         {
          
-            Student std = mySqlContext.Student.FindAsync(Id).Result;
-
+            Student std = mySqlContext.Student.Include(x => x.Grade)
+               .Include(details => details.StudentDetails).FirstOrDefault(x => x.StudentId == Id);
+            List<Grade> grades = mySqlContext.Grade.ToList ();
+            StudentCreateVM dynamicModel = new StudentCreateVM();
+            dynamicModel.Student = std;
+            dynamicModel.Grades = grades;
+            //dynamicModel.StudentDetails = 
             //var anonymousObjResult = mySqlContext.Student
             //                .Where(st => st.StudentId == 1)
             //                .Select(st => new {
@@ -39,7 +44,7 @@ namespace FirstProject.Controllers
             //                    Name = st.StudentName
             //                });
 
-            return View(std);
+            return View(dynamicModel);
         }
 
         [HttpPost]
@@ -66,6 +71,7 @@ namespace FirstProject.Controllers
         [HttpPost]
         public ActionResult Create(Student student, StudentDetails studentDetails)
         {
+            student.StudentDetails = studentDetails;
             mySqlContext.Student.Add(student);
             mySqlContext.Add(studentDetails);
             mySqlContext.SaveChanges();
